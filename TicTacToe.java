@@ -8,7 +8,8 @@ public class TicTacToe {
     String winner = null;
     int turn = 0;
     int firstPlayer = 0;
-    static Scanner sc = new Scanner(System.in);
+    boolean nextGame = true;
+    static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
         System.out.println("Welcome to the Tic Tac Toe Game Program in Java!");
         TicTacToe gameObj = new TicTacToe();
@@ -35,7 +36,7 @@ public class TicTacToe {
         System.out.println("\nPlayer please choose your play Letter.");
         System.out.println("Enter 'X' to play 'X' on your turn.");
         System.out.println("Or Enter 'O' to play 'O' on your turn.");
-        char playerInput = sc.next().charAt(0);
+        char playerInput = scanner.next().charAt(0);
         if (playerInput == 'X' || playerInput == 'x') {
             playerLetter = 'X';
             computerLetter = 'O';
@@ -61,7 +62,7 @@ public class TicTacToe {
     }
     void playerPlays() {
         System.out.print("\nEnter an empty cell number [1-9] where do want make your move : ");
-        byte playerCell = sc.nextByte();
+        byte playerCell = scanner.nextByte();
         if (playerCell > 9 || playerCell < 1) {
             System.out.println("\nInvalid selection.\nPlease try again!");
             playerPlays();
@@ -165,6 +166,7 @@ public class TicTacToe {
             gameBoard[2] = computerLetter;
             madeMove = true;
         }
+
         else if(gameBoard[4] == computerLetter && gameBoard[5] == computerLetter && gameBoard[6] == ' ') {
             gameBoard[6] = computerLetter;
             madeMove = true;
@@ -201,6 +203,7 @@ public class TicTacToe {
             gameBoard[4] = computerLetter;
             madeMove = true;
         }
+
         else if(gameBoard[2] == computerLetter && gameBoard[5] == computerLetter && gameBoard[8] == ' ') {
             gameBoard[8] = computerLetter;
             madeMove = true;
@@ -213,7 +216,6 @@ public class TicTacToe {
             gameBoard[5] = computerLetter;
             madeMove = true;
         }
-
         else if(gameBoard[3] == computerLetter && gameBoard[6] == computerLetter && gameBoard[9] == ' ') {
             gameBoard[9] = computerLetter;
             madeMove = true;
@@ -226,7 +228,6 @@ public class TicTacToe {
             gameBoard[6] = computerLetter;
             madeMove = true;
         }
-
         else if(gameBoard[1] == computerLetter && gameBoard[5] == computerLetter && gameBoard[9] == ' ') {
             gameBoard[9] = computerLetter;
             madeMove = true;
@@ -239,7 +240,6 @@ public class TicTacToe {
             gameBoard[5] = computerLetter;
             madeMove = true;
         }
-
         else if(gameBoard[3] == computerLetter && gameBoard[5] == computerLetter && gameBoard[7] == ' ') {
             gameBoard[7] = computerLetter;
             madeMove = true;
@@ -252,7 +252,6 @@ public class TicTacToe {
             gameBoard[5] = computerLetter;
             madeMove = true;
         }
-
         if (madeMove == false)
             blockPlayersMove();
     }
@@ -344,6 +343,28 @@ public class TicTacToe {
                     playersTurn();
             }
             turn++;
+        }
+    }
+    void playGame() {
+        startGame();
+        continueTillGameOver();
+    }
+
+    void playAnotherGame() {
+        System.out.println("\n\n\nDo you want to play another game?");
+        System.out.println("Enter 'Yes' to continue.");
+        System.out.println("Enter 'No' to exit.");
+        char playerInput = scanner.next().charAt(0);
+        if (playerInput == 'Y' || playerInput == 'y') {
+            nextGame = true;
+        }
+        else if (playerInput == 'N' || playerInput == 'n') {
+            nextGame = false;
+            System.out.println("\n\nThank you for playing!");
+        }
+        else {
+            System.out.println("\nInvalid Input.\nPlease try again!");
+            playAnotherGame();
         }
     }
 }
