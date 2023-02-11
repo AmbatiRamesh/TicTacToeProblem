@@ -7,7 +7,8 @@ public class TicTacToe {
     char computerLetter = '\0';
     String winner = null;
     int turn = 0;
-    static Scanner sccaner = new Scanner(System.in);
+    int firstPlayer = 0;
+    static Scanner sc = new Scanner(System.in);
     public static void main(String[] args) {
         System.out.println("Welcome to the Tic Tac Toe Game Program in Java!");
         TicTacToe gameObj = new TicTacToe();
@@ -34,7 +35,7 @@ public class TicTacToe {
         System.out.println("\nPlayer please choose your play Letter.");
         System.out.println("Enter 'X' to play 'X' on your turn.");
         System.out.println("Or Enter 'O' to play 'O' on your turn.");
-        char playerInput = sccaner.next().charAt(0);
+        char playerInput = sc.next().charAt(0);
         if (playerInput == 'X' || playerInput == 'x') {
             playerLetter = 'X';
             computerLetter = 'O';
@@ -60,7 +61,7 @@ public class TicTacToe {
     }
     void playerPlays() {
         System.out.print("\nEnter an empty cell number [1-9] where do want make your move : ");
-        byte playerCell = sccaner.nextByte();
+        byte playerCell = sc.nextByte();
         if (playerCell > 9 || playerCell < 1) {
             System.out.println("\nInvalid selection.\nPlease try again!");
             playerPlays();
@@ -164,7 +165,6 @@ public class TicTacToe {
             gameBoard[2] = computerLetter;
             madeMove = true;
         }
-
         else if(gameBoard[4] == computerLetter && gameBoard[5] == computerLetter && gameBoard[6] == ' ') {
             gameBoard[6] = computerLetter;
             madeMove = true;
@@ -226,6 +226,7 @@ public class TicTacToe {
             gameBoard[6] = computerLetter;
             madeMove = true;
         }
+
         else if(gameBoard[1] == computerLetter && gameBoard[5] == computerLetter && gameBoard[9] == ' ') {
             gameBoard[9] = computerLetter;
             madeMove = true;
@@ -238,6 +239,7 @@ public class TicTacToe {
             gameBoard[5] = computerLetter;
             madeMove = true;
         }
+
         else if(gameBoard[3] == computerLetter && gameBoard[5] == computerLetter && gameBoard[7] == ' ') {
             gameBoard[7] = computerLetter;
             madeMove = true;
@@ -250,6 +252,7 @@ public class TicTacToe {
             gameBoard[5] = computerLetter;
             madeMove = true;
         }
+
         if (madeMove == false)
             blockPlayersMove();
     }
@@ -286,7 +289,6 @@ public class TicTacToe {
             gameBoard[5] = computerLetter;
         else if(gameBoard[3] == playerLetter && gameBoard[7] == playerLetter && gameBoard[5] == ' ')
             gameBoard[5] = computerLetter;
-
         else if(gameBoard[1] == playerLetter && gameBoard[3] == playerLetter && gameBoard[2] == ' ')
             gameBoard[2] = computerLetter;
         else if(gameBoard[4] == playerLetter && gameBoard[5] == playerLetter && gameBoard[6] == ' ')
@@ -303,6 +305,46 @@ public class TicTacToe {
             gameBoard[2] = computerLetter;
         else if(gameBoard[3] == playerLetter && gameBoard[9] == playerLetter && gameBoard[6] == ' ')
             gameBoard[6] = computerLetter;
+    }
+    void playersTurn() {
+        playerPlays();
+        showBoard();
+        checkWinOrTie();
+    }
+    void computersTurn(){
+        computerPlays();
+        showBoard();
+        checkWinOrTie();
+    }
+    void startGame() {
+        firstPlayer = toss();
+        initialiseGame();
+        choosePlayerLetter();
+        if (firstPlayer == 1)
+            System.out.println("\nPlayer won the toss.\nPlayer plays first.");
+        else
+            System.out.println("\nComputer won the toss.\nComputer plays first.");
+        showBoard();
+    }
+    void continueTillGameOver() {
+        while(winner == null) {
+            if(firstPlayer == 1) {
+                playersTurn();
+                if(winner != null)
+                    break;
+                else
+                    computersTurn();
+            }
+            else
+            {
+                computersTurn();
+                if(winner != null)
+                    break;
+                else
+                    playersTurn();
+            }
+            turn++;
+        }
     }
 }
 
